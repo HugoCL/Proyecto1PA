@@ -34,7 +34,13 @@ public class WallE {
 
     }
 
-    public void ejecutarInstruccion() {
+    public void ejecutarInstruccion(int ordenActual) {
+        char charOrdenActual;
+        charOrdenActual = instruccion[ordenActual].getInstruccion();
+        if (charOrdenActual == 'I'){
+            char orientacion = recinto.getOrientacion();
+            switch ()
+        }
     }
 
     public void cargarInstrucciones(int orden, char accion){

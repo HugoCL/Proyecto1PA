@@ -34,11 +34,11 @@ public class Recinto {
     }
 
     public int nuevaOrientacion() {
-        throw new UnsupportedOperationException("Not supported yet.");
+
     }
 
     public int nuevaPosicionY() {
-        throw new UnsupportedOperationException("Not supported yet.");
+
     }
 
     public int nuevaPosicionX() {
@@ -51,5 +51,8 @@ public class Recinto {
 
     public int getlimiteColumnas() {
       return limiteColumnas;
+    }
+    public char getOrientacion(){
+        return orientacion;
     }
 }
