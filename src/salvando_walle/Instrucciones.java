@@ -4,9 +4,15 @@ public class Instrucciones {
 
     private char instruccion;
 
-    public void setInstruccion() {
+    Instrucciones(char accion){
+        setInstruccion(accion);
     }
 
-    public void getInstruccion() {
+    public void setInstruccion(char instr) {
+        this.instruccion = instr;
+    }
+
+    public char getInstruccion() {
+        return instruccion;
     }
 }

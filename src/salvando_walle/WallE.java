@@ -2,26 +2,42 @@ package salvando_walle;
 
 
 import salvando_walle.Instrucciones;
-
+import salvando_walle.Recinto;
 public class WallE {
 
     private boolean isDestino;
 
     private boolean isMovimientoValido;
 
-    private Instrucciones[] instruccion;
+    private Instrucciones[] instruccion = new Instrucciones[40];
 
-    public WallE() {
+    private int destinoX;
+
+    private int destinoY;
+
+    private Recinto recinto;
+
+    public WallE(Recinto recinto) {
+
     }
 
     public boolean comprobarDestino() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        if (destinoX == recinto.nuevaPosicionX() && destinoY == recinto.nuevaPosicionY()){
+            this.isDestino = true;
+        }
+        else{
+            this.isMovimientoValido = false;
+        }
     }
 
     public boolean comprobarValidez() {
-        throw new UnsupportedOperationException("Not supported yet.");
+
     }
 
     public void ejecutarInstruccion() {
+    }
+
+    public void cargarInstrucciones(int orden, char accion){
+        instruccion[orden] = new Instrucciones(accion);
     }
 }
