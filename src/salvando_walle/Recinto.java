@@ -21,6 +21,8 @@ public class Recinto {
 
     private char orientacion;
 
+    private WallE walle = new WallE();
+
     public Recinto() {
 
     }
@@ -35,13 +37,62 @@ public class Recinto {
         recintoCompleto[coordX][coordY] = valor;
     }
 
-    public void mostrar(){
-        for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 5; j++) {
-                System.out.print(recintoCompleto[i][j]);
+    public void newWallE(int m , int n){
+        walle.setDestinoX(n);
+        walle.setDestinoY(m);
+
+    }
+    public void empezarWallE(){
+        char instruccionActual;
+        for (int i = 0; i < 16; i++) {
+            instruccionActual = walle.ejecutarInstruccion(i);
+            if (orientacion == 'N' && instruccionActual == 'A'){
+                nuevaPosicionX(this.posicionWEx - 1);
             }
-            System.out.println();
+            else if (orientacion == 'N' && instruccionActual == 'I'){
+                nuevaOrientacion('O');
+            }
+            else if (orientacion == 'N' && instruccionActual == 'D'){
+                nuevaOrientacion('E');
+            }
+            else if (orientacion == 'E' && instruccionActual == 'A'){
+                nuevaPosicionY(this.posicionWEy + 1);
+            }
+            else if (orientacion == 'E' && instruccionActual == 'I'){
+                nuevaOrientacion('N');
+            }
+            else if (orientacion == 'E' && instruccionActual == 'D'){
+                nuevaOrientacion('S');
+            }
+            else if (orientacion == 'S' && instruccionActual == 'A'){
+                nuevaPosicionY(this.posicionWEx + 1);
+            }
+            else if (orientacion == 'S' && instruccionActual == 'I'){
+                nuevaOrientacion('E');
+            }
+            else if (orientacion == 'S' && instruccionActual == 'D'){
+                nuevaOrientacion('O');
+            }
+            else if (orientacion == 'O' && instruccionActual == 'A'){
+                nuevaPosicionY(this.posicionWEy - 1);
+            }
+            else if (orientacion == 'O' && instruccionActual == 'I'){
+                nuevaOrientacion('S');
+            }
+            else if (orientacion == 'O' && instruccionActual == 'D'){
+                nuevaOrientacion('N');
+            }
         }
+
+    }
+
+    /***
+     * Este metodo se encarga de cargar las instrucciones en la colleción de instrucciones
+     * @param orden Es un int que indica el orden numerico actual de la orden a cargar
+     * @param accion Es el char que contiene la instrucción (I, D o A)
+     */
+    public void cargarInstrucciones(int orden, char accion){
+        walle.cargarInstrucciones(orden, accion);
     }
     /***
      * Este método define cual es el limite de las filas y para iterar a lo largo de la matriz
@@ -71,14 +122,14 @@ public class Recinto {
      * @param pY Es un int que posee la ubicación en Y luego de un movimiento, proviente de la clase WallE
      */
     public void nuevaPosicionY(int pY) {
-
+        this.posicionWEy = pY;
     }
     /***
      * Método que asigna la nueva ubicación en el eje X de WallE en la matriz
      * @param pX Es un int que posee la ubicación en X luego de un movimiento, proviente de la clase WallE
      */
     public void nuevaPosicionX(int pX) {
-
+        this.posicionWEx = pX;
     }
 
     /***

@@ -46,11 +46,8 @@ public class WallE {
      * @param ordenActual Es un entero que indica la instruccion a realizar, dada por un orden numérico
      *
      */
-    public void ejecutarInstruccion(int ordenActual) {
-        for (int i = 0; i < 16; i++) {
-            System.out.println(i);
-            System.out.println(instruccion[i].getInstruccion());
-        }
+    public char ejecutarInstruccion(int ordenActual) {
+        return instruccion[ordenActual].getInstruccion();
     }
 
     /***
