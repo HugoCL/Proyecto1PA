@@ -16,16 +16,54 @@ public class Lectura {
 
     /***
      * Este método se encarga de la lectura del archivo y se pasar sus datos a las demás clases
-     * @throws FileNotFoundException
+     *
      */
     public void iniciarLectura() throws FileNotFoundException{
-        //Scanner entrada = new Scanner(new File("WALLE.in"));
-        //entrada.useDelimiter("\\s");
-        //while(entrada.hasNextLine()) {
-        //    int m, n
-        //}
-        //entrada.close();
-        // Mas...
+        Scanner entrada = new Scanner(new File("WALLE.in"));
+        entrada.useDelimiter("\\s");
+        int m, n;
+        m = entrada.nextInt();
+        n = entrada.nextInt();
+        entrada.next();
+        Recinto recinto = new Recinto();
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                recinto.crearRecinto(i, j, entrada.nextInt());
+            }
+            entrada.next();
+        }
+        recinto.setLimiteFilas(m);
+        recinto.setLimiteColumnas(n);
+        m = entrada.nextInt();
+        n = entrada.nextInt();
+        recinto.nuevaPosicionX(n-1);
+        recinto.nuevaPosicionY(m-1);
+        WallE walle = new WallE();
+        entrada.next();
+        m = entrada.nextInt();
+        n = entrada.nextInt();
+        walle.setDestinoX(n-1);
+        walle.setDestinoY(m-1);
+        entrada.next();
+        char orientacion;
+        orientacion = entrada.next().charAt(0);
+        recinto.nuevaOrientacion(orientacion);
+        entrada.next();
+        int nInstrucciones = entrada.nextInt();
+        entrada.next();
+        char priIns = entrada.next().charAt(0);
+        String ins = entrada.nextLine();
+        String[] separado = ins.split("\\s+");
+        for (int i = 0; i < nInstrucciones ; i++) {
+            if (i > 1){
+                walle.cargarInstrucciones(i, separado[i].charAt(0));
+            }
+            else{
+                walle.cargarInstrucciones(i, priIns);
+            }
+        }
+        entrada.close();
+        walle.ejecutarInstruccion(1);
     }
 
 }

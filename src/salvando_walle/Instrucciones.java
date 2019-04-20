@@ -15,6 +15,7 @@ public class Instrucciones {
      * @param accion Es el char que contiene la instrucción a guardar
      */
     Instrucciones(char accion){
+        setInstruccion(accion);
     }
 
     /***

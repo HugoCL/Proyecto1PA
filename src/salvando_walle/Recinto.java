@@ -22,6 +22,7 @@ public class Recinto {
     private char orientacion;
 
     public Recinto() {
+
     }
 
     /***
@@ -31,9 +32,17 @@ public class Recinto {
      * @param valor Es el valor que poseerá la celda en la matriz, ya sea un 0 (Nada) o un 1 (Si es una bomba)
      */
     public void crearRecinto(int coordX, int coordY, int valor){
-        recintoCompleto[coordY][coordX] = valor;
+        recintoCompleto[coordX][coordY] = valor;
     }
 
+    public void mostrar(){
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 5; j++) {
+                System.out.print(recintoCompleto[i][j]);
+            }
+            System.out.println();
+        }
+    }
     /***
      * Este método define cual es el limite de las filas y para iterar a lo largo de la matriz
      * @param limiF Numero entero que posee el limite de las filas, obtenido del archivo

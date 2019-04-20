@@ -19,7 +19,8 @@ public class WallE {
     private int destinoY;
 
 
-    public WallE(Recinto recinto) {
+    public WallE() {
+
     }
 
     /***
@@ -46,6 +47,10 @@ public class WallE {
      *
      */
     public void ejecutarInstruccion(int ordenActual) {
+        for (int i = 0; i < 16; i++) {
+            System.out.println(i);
+            System.out.println(instruccion[i].getInstruccion());
+        }
     }
 
     /***
@@ -54,6 +59,19 @@ public class WallE {
      * @param accion Es el char que contiene la instrucción (I, D o A)
      */
     public void cargarInstrucciones(int orden, char accion){
+        instruccion[orden] = new Instrucciones(accion);
+    }
 
+    public void setDestinoX(int pX){
+        this.destinoX = pX;
+    }
+    public void setDestinoY(int pY){
+        this.destinoY = pY;
+    }
+    public int getDestinoX(){
+        return destinoX;
+    }
+    public int getDestinoY(){
+        return  destinoY;
     }
 }
