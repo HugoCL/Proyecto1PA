@@ -21,6 +21,8 @@ public class Recinto {
 
     private char orientacion;
 
+    private WallE walle = new WallE();
+
     public Recinto() {
 
     }
@@ -35,13 +37,115 @@ public class Recinto {
         recintoCompleto[coordX][coordY] = valor;
     }
 
-    public void mostrar(){
-        for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 5; j++) {
-                System.out.print(recintoCompleto[i][j]);
+    public void newWallE(int m , int n){
+        walle.setDestinoX(n);
+        walle.setDestinoY(m);
+
+    }
+    public void empezarWallE(int nInstruc){
+        char instruccionActual;
+        boolean valido;
+        for (int i = 0; i < nInstruc; i++) {
+            instruccionActual = walle.ejecutarInstruccion(i);
+            System.out.println("Ori: "+orientacion+" "+"Ins: "+instruccionActual+" "+"X: "+posicionWEx+" Y:"+posicionWEy);
+            if (orientacion == 'N' && instruccionActual == 'A'){
+                valido = walle.comprobarValidez(posicionWEx - 1 , limiteColumnas);
+                if (valido) {
+                    if (recintoCompleto[posicionWEx - 1][posicionWEy] == 0){
+                        int nPx = posicionWEx - 1;
+                        nuevaPosicionX(nPx);
+                    }
+                    else{
+                        System.out.println("X");
+                        System.out.println("Datos de la falla: ¡Bomba! en la coordenada "+(posicionWEx-1)+" "+(posicionWEy));
+                        System.exit(0);
+                    }
+                }
             }
-            System.out.println();
+            else if (orientacion == 'N' && instruccionActual == 'I'){
+                nuevaOrientacion('O');
+            }
+            else if (orientacion == 'N' && instruccionActual == 'D'){
+                nuevaOrientacion('E');
+            }
+            else if (orientacion == 'E' && instruccionActual == 'A'){
+                valido = walle.comprobarValidez(posicionWEy + 1 , limiteFilas);
+                if (valido) {
+                    if (recintoCompleto[posicionWEx][posicionWEy + 1] == 0) {
+                        int nPy = posicionWEy + 1;
+                        nuevaPosicionY(nPy);
+                    } else {
+                        System.out.println("X");
+                        System.out.println("Datos de la falla: ¡Bomba! en la coordenada "+(posicionWEx)+" "+(posicionWEy+1));
+                        System.exit(0);
+                    }
+                }
+            }
+            else if (orientacion == 'E' && instruccionActual == 'I'){
+                nuevaOrientacion('N');
+            }
+            else if (orientacion == 'E' && instruccionActual == 'D'){
+                nuevaOrientacion('S');
+            }
+            else if (orientacion == 'S' && instruccionActual == 'A'){
+                valido = walle.comprobarValidez(posicionWEx + 1 , limiteColumnas);
+                if (valido) {
+                    if (recintoCompleto[posicionWEx + 1][posicionWEy] == 0){
+                        int nPx = posicionWEx + 1;
+                        nuevaPosicionX(nPx);
+                    }
+                    else{
+                        System.out.println("X");
+                        System.out.println("Datos de la falla: ¡Bomba! en la coordenada "+(posicionWEx+1)+" "+(posicionWEy));
+                        System.exit(0);
+                    }
+                }
+            }
+            else if (orientacion == 'S' && instruccionActual == 'I'){
+                nuevaOrientacion('E');
+            }
+            else if (orientacion == 'S' && instruccionActual == 'D'){
+                nuevaOrientacion('O');
+            }
+            else if (orientacion == 'O' && instruccionActual == 'A'){
+                valido = walle.comprobarValidez(posicionWEy - 1 , limiteFilas);
+                if (valido) {
+                    if (recintoCompleto[posicionWEx][posicionWEy - 1] == 0) {
+                        int nPy = posicionWEy - 1;
+                        nuevaPosicionY(nPy);
+                    } else {
+                        System.out.println("X");
+                        System.out.println("Datos de la falla: ¡Bomba! en la coordenada "+(posicionWEx)+" "+(posicionWEy-1));
+                        System.exit(0);
+                    }
+                }
+            }
+            else if (orientacion == 'O' && instruccionActual == 'I'){
+                nuevaOrientacion('S');
+            }
+            else if (orientacion == 'O' && instruccionActual == 'D'){
+                nuevaOrientacion('N');
+            }
         }
+
+        boolean isDestino = walle.comprobarDestino(posicionWEy, posicionWEx);
+        if (isDestino){
+            System.out.println("E");
+            System.exit(0);
+        }
+        else
+            System.out.println("X");
+            System.out.println("Datos de la falla: No se llegó al destino");
+            System.exit(0);
+    }
+
+    /***
+     * Este metodo se encarga de cargar las instrucciones en la colleción de instrucciones
+     * @param orden Es un int que indica el orden numerico actual de la orden a cargar
+     * @param accion Es el char que contiene la instrucción (I, D o A)
+     */
+    public void cargarInstrucciones(int orden, char accion){
+        walle.cargarInstrucciones(orden, accion);
     }
     /***
      * Este método define cual es el limite de las filas y para iterar a lo largo de la matriz
@@ -63,7 +167,7 @@ public class Recinto {
      * @param orientacion Es el char que posee la nueva orientación de WallE. Proviene de la clase WallE.
      */
     public void nuevaOrientacion(char orientacion) {
-
+        this.orientacion = orientacion;
     }
 
     /***
@@ -71,14 +175,14 @@ public class Recinto {
      * @param pY Es un int que posee la ubicación en Y luego de un movimiento, proviente de la clase WallE
      */
     public void nuevaPosicionY(int pY) {
-
+        this.posicionWEy = pY;
     }
     /***
      * Método que asigna la nueva ubicación en el eje X de WallE en la matriz
      * @param pX Es un int que posee la ubicación en X luego de un movimiento, proviente de la clase WallE
      */
     public void nuevaPosicionX(int pX) {
-
+        this.posicionWEx = pX;
     }
 
     /***
