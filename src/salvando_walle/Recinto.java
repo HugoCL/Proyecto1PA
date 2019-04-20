@@ -11,7 +11,7 @@ public class Recinto {
 
     private int limiteColumnas;
 
-    private int[][] recinto = new int [100][100];
+    private int[][] recintoCompleto = new int [100][100];
 
     private int posicionWEx;
 
@@ -23,33 +23,36 @@ public class Recinto {
     }
 
     public void crearRecinto(int coordX, int coordY, int valor){
-        recinto[coordY][coordX] = valor;
+        recintoCompleto[coordY][coordX] = valor;
     }
     public void setlimiteFilas(int limiF) {
         this.limiteFilas = limiF;
     }
 
     public void setlimiteColumnas(int limiC) {
-      this.limiteColumnas = limiC;
+        this.limiteColumnas = limiC;
     }
 
     public int nuevaOrientacion() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return 0;
     }
 
     public int nuevaPosicionY() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return 0;
     }
 
     public int nuevaPosicionX() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return 0;
     }
 
     public int getlimiteFilas() {
-      return limiteFilas;
+        return limiteFilas;
     }
 
     public int getlimiteColumnas() {
-      return limiteColumnas;
+        return limiteColumnas;
+    }
+    public char getOrientacion(){
+        return orientacion;
     }
 }
