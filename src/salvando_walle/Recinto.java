@@ -42,12 +42,25 @@ public class Recinto {
         walle.setDestinoY(m);
 
     }
-    public void empezarWallE(){
+    public void empezarWallE(int nInstruc){
         char instruccionActual;
-        for (int i = 0; i < 16; i++) {
+        boolean valido;
+        for (int i = 0; i < nInstruc; i++) {
             instruccionActual = walle.ejecutarInstruccion(i);
+            System.out.println("Ori: "+orientacion+" "+"Ins: "+instruccionActual+" "+"X: "+posicionWEx+" Y:"+posicionWEy);
             if (orientacion == 'N' && instruccionActual == 'A'){
-                nuevaPosicionX(this.posicionWEx - 1);
+                valido = walle.comprobarValidez(posicionWEx - 1 , limiteColumnas);
+                if (valido) {
+                    if (recintoCompleto[posicionWEx - 1][posicionWEy] == 0){
+                        int nPx = posicionWEx - 1;
+                        nuevaPosicionX(nPx);
+                    }
+                    else{
+                        System.out.println("X");
+                        System.out.println("Datos de la falla: ¡Bomba! en la coordenada "+(posicionWEx-1)+" "+(posicionWEy));
+                        System.exit(0);
+                    }
+                }
             }
             else if (orientacion == 'N' && instruccionActual == 'I'){
                 nuevaOrientacion('O');
@@ -56,7 +69,17 @@ public class Recinto {
                 nuevaOrientacion('E');
             }
             else if (orientacion == 'E' && instruccionActual == 'A'){
-                nuevaPosicionY(this.posicionWEy + 1);
+                valido = walle.comprobarValidez(posicionWEy + 1 , limiteFilas);
+                if (valido) {
+                    if (recintoCompleto[posicionWEx][posicionWEy + 1] == 0) {
+                        int nPy = posicionWEy + 1;
+                        nuevaPosicionY(nPy);
+                    } else {
+                        System.out.println("X");
+                        System.out.println("Datos de la falla: ¡Bomba! en la coordenada "+(posicionWEx)+" "+(posicionWEy+1));
+                        System.exit(0);
+                    }
+                }
             }
             else if (orientacion == 'E' && instruccionActual == 'I'){
                 nuevaOrientacion('N');
@@ -65,7 +88,18 @@ public class Recinto {
                 nuevaOrientacion('S');
             }
             else if (orientacion == 'S' && instruccionActual == 'A'){
-                nuevaPosicionY(this.posicionWEx + 1);
+                valido = walle.comprobarValidez(posicionWEx + 1 , limiteColumnas);
+                if (valido) {
+                    if (recintoCompleto[posicionWEx + 1][posicionWEy] == 0){
+                        int nPx = posicionWEx + 1;
+                        nuevaPosicionX(nPx);
+                    }
+                    else{
+                        System.out.println("X");
+                        System.out.println("Datos de la falla: ¡Bomba! en la coordenada "+(posicionWEx+1)+" "+(posicionWEy));
+                        System.exit(0);
+                    }
+                }
             }
             else if (orientacion == 'S' && instruccionActual == 'I'){
                 nuevaOrientacion('E');
@@ -74,7 +108,17 @@ public class Recinto {
                 nuevaOrientacion('O');
             }
             else if (orientacion == 'O' && instruccionActual == 'A'){
-                nuevaPosicionY(this.posicionWEy - 1);
+                valido = walle.comprobarValidez(posicionWEy - 1 , limiteFilas);
+                if (valido) {
+                    if (recintoCompleto[posicionWEx][posicionWEy - 1] == 0) {
+                        int nPy = posicionWEy - 1;
+                        nuevaPosicionY(nPy);
+                    } else {
+                        System.out.println("X");
+                        System.out.println("Datos de la falla: ¡Bomba! en la coordenada "+(posicionWEx)+" "+(posicionWEy-1));
+                        System.exit(0);
+                    }
+                }
             }
             else if (orientacion == 'O' && instruccionActual == 'I'){
                 nuevaOrientacion('S');
@@ -84,6 +128,15 @@ public class Recinto {
             }
         }
 
+        boolean isDestino = walle.comprobarDestino(posicionWEy, posicionWEx);
+        if (isDestino){
+            System.out.println("E");
+            System.exit(0);
+        }
+        else
+            System.out.println("X");
+            System.out.println("Datos de la falla: No se llegó al destino");
+            System.exit(0);
     }
 
     /***
@@ -114,7 +167,7 @@ public class Recinto {
      * @param orientacion Es el char que posee la nueva orientación de WallE. Proviene de la clase WallE.
      */
     public void nuevaOrientacion(char orientacion) {
-
+        this.orientacion = orientacion;
     }
 
     /***
